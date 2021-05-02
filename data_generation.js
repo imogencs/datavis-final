@@ -2,7 +2,7 @@ function random_in_range(range_start = 0, range_end = 1) {
     return Math.random() * (range_end - range_start) + range_start
 }
 
-function generate_hourly_pops(pop_range_start = 0, pop_range_end = 1, type = null, n = 24) {
+function generate_hourly_data(pop_range_start = 0, pop_range_end = 1, type = null, n = 24) {
     // start with a totally random pop between pop_range_start and pop_range_end
     let pops = []
     pops[0] = Math.round(random_in_range(pop_range_start, pop_range_end) * 20) / 20
@@ -45,11 +45,7 @@ function generate_hourly_pops(pop_range_start = 0, pop_range_end = 1, type = nul
         }
         pops[i] = Math.round(pops[i] * 20) / 20
     }
-    return pops
-}
-
-
-function generate_hourly_amounts(pops) {
+    
     // inches of percipitation
     let amounts = []
     let min_amount = 0
@@ -60,13 +56,22 @@ function generate_hourly_amounts(pops) {
         // if (pops[i] <= no_rain_boundary) {
         //     amounts[i] = min_amount
         // } else {
-            amounts[i] = Math.round(random_in_range(min_amount, max_amount) * pops[i] * 20) / 20
+            amounts[i] = random_in_range(min_amount, max_amount) * pops[i]
+            if (pops[i] >= .1) {
+                amounts[i] += .05
+            }
+            amounts[i] = Math.round(amounts[i] * 20) / 20
         // }
     }
-    return amounts
+    return [amounts, pops]
+    // return pops
 }
+
+
+// function generate_hourly_amounts(pops) {
+// }
 
 
 // pops = generate_hourly_pops()
 // console.log(pops)
-// console.log(generate_hourly_amounts(pops))
+console.log(generate_hourly_data())
