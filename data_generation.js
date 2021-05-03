@@ -128,8 +128,6 @@ function classify_preciptiation(amount) {
 /* misc
 /***************************************************************** */
 
-
-
 function random_in_range(range_start = 0, range_end = 1) {
     return Math.random() * (range_end - range_start) + range_start
 }
